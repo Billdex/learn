@@ -91,7 +91,22 @@ var vm = new Vue({
 </script>
 ```
 
-## 1.6
+## 1.6 v-model
+`v-model`可以实现DOM里数据到Vue实例数据的双向绑定，即DOM数据修改时Vue中的数据也会随之改变。
+该特性可用在表单上，表单内容修改可以即时反映到Vue实例数据中。
+```html
+<div id="elId">
+    <input type="text" v-model="inputModel">
+</div>
+<script>
+var vm = new Vue({
+    el: "#elId",
+    data:{
+        inputModel: ...,
+    }   
+});
+</script>
+```
 
 
 
