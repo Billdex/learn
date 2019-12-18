@@ -66,3 +66,42 @@ var app7 = new Vue({
         ]
     }
 });
+
+var miao = new Vue({
+    el: "#miao",
+    data:{
+        message: "hey, 鼠标移上来看看",
+        msgTitle:"看到我了吗",
+        seen : true,
+        miaoList :[
+            {info: 'miao1'},
+            {info: 'miao2'},
+            {info: 'miao3'},
+        ],
+        inputInfo: '',
+        tips: '',
+    },
+    methods:{
+        msgDisappear: function () {
+            this.seen = this.seen !== true;
+        },
+        miaoPush:function () {
+            this.miaoList.push({info: 'miao' + (this.miaoList.length+1)});
+        },
+        addToList: function(){
+            this.miaoList.push({info: this.inputInfo});
+            this.tips = '添加成功';
+        },
+        delFromList: function(){
+            for(let i in this.miaoList){
+                if (this.miaoList[i].info === this.inputInfo){
+                    this.miaoList.splice(i, 1);
+                    i = i -1;
+                    this.tips = '删除成功';
+                    return
+                }
+            }
+            this.tips = '删除失败';
+        },
+    }
+});
