@@ -37,7 +37,7 @@
 <!--v-model可以用来进行数据的双向绑定，如输入框-->
 <div id="app-6">
     <p>{{ message }}</p>
-    <input v-model="message" type="text" />
+    <input v-model="message" type="text"/>
 </div>
 
 <!--component组件, 没太搞明白怎么用-->
@@ -72,17 +72,11 @@
     </ol>
     <button @click="miaoPush">结尾push一个</button>
     <p>接下来往列表中增删元素</p>
-    <input type="text" v-model="inputInfo" />
+    <input type="text" v-model="inputInfo"/>
     <button @click="addToList">添加一个元素</button>
     <button @click="delFromList">删除一个元素</button>
     <p>{{tips}}</p>
 </div>
-
-
-
-
-
-
 
 
 <script src="start.js"></script>
