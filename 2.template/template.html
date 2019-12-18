@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>Vue Template</title>
+    <script src="../vue/vue.js"></script>
+</head>
+<body>
+
+<h1>本页面用于练习模板的相关语法</h1>
+<div id="template">
+    <h2>文本插值</h2>
+    <p>
+        <span>js运算的data1({{data1}})+data2({{data2}}) = {{data1+data2}}</span><br>
+        <span>动态绑定的：{{text}}</span><br>
+        <span v-once>使用v-once一次初始化的：{{text}}</span>
+    </p>
+    在输入框输入修改的值
+    <label>
+        <input type="text" v-model="text" />
+    </label>
+    <h2>html文本插值</h2>
+    <p><span v-html="html">{{html}}</span></p>
+    <label>
+        <textarea v-model="html"></textarea>
+    </label>
+    <h2>指令参数</h2>
+    <a v-bind="{title: title, href: url}">这是一个链接</a><br>
+    <button v-on="{mouseenter:mEnter, mouseout:mOut}">{{buttonInfo}}</button>
+
+
+
+</div>
+
+</body>
+<script src="template.js"></script>
+</html>
