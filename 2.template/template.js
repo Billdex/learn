@@ -8,6 +8,9 @@ var template = new Vue({
         title: '链接',
         url: 'http://www.baidu.com',
         buttonInfo: '鼠标移上来试试',
+        textattr: 'href',
+        modifierNum: 5,
+        modifierTrim: '          hey        ',
     },
     methods:{
         mEnter: function(){
@@ -16,5 +19,13 @@ var template = new Vue({
         mOut: function(){
             this.buttonInfo = '鼠标出去了';
         },
+        urltotitle: function () {
+            if(this.textattr === 'href'){
+                this.textattr = 'title';
+            }
+            else{
+                this.textattr = 'href';
+            }
+        }
     },
 });

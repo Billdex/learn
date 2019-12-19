@@ -10,7 +10,6 @@
 
 ```html
 <span>{{ msg }}</span>
-<span>{{ data1 + data2 }}</span>
 ```
 
 如果希望 `msg` 的处展示的文本只在载入或第一次使用的时候初始化，之后的数据更新不再改编文本内容，可以使用 `v-once` 指令。
@@ -35,7 +34,7 @@ var vm = new Vue({
 </script>
 ```
 
-注意，使用 html 文本解析存在 xss 攻击的风险，务必只对可信任的内容使用 html 文本插值。
+**注意：使用 html 文本解析存在 xss 攻击的风险，务必只对可信任的内容使用 html 文本插值。**
 
 ### 2.1.3 JavaScript 表达式
 
@@ -47,7 +46,9 @@ var vm = new Vue({
 <span>{{string.split('')}}</span>
 ```
 
-注意，文本模板只能处理单个 `表达式`，不能处理 `语句`，下面这几种是属于 `语句`，在解析时会报错：
+**注意：文本模板只能处理单个 `表达式`，不能处理 `语句`，**  
+
+下面这几种写法属于 `语句`，在解析时会报错：
 
 ```html
 <span>{{var a = 1}}</span>
@@ -92,3 +93,30 @@ var vm = new Vue({
 <span v-bind="{title: titleInfo, href: url}"></span>
 <span v-on="{click: doClick, mouseenter: doEnter}"></span>
 ```
+
+### 2.2.2 动态参数  
+
+不止属性值可以使用变量或JS表达式来确定值，指令的参数也可以，也就是绑定的html的属性或事件可以用JS表达式确定。
+
+```html
+<a v-bind:[attributeName]="url"> ... </a>
+<button v-on:[attributeName]="doSomething"></button>
+```
+
+`attributeName` 可以是一个变量，也可以是一个JS表达式，最终结果会是一个字符串参数，如果值为 `null` 可以被视为显性地解除了绑定。  
+
+**注意：表达式不要包含空格与引号，变量也尽量不要使用大写(HTML对属性和属性值大小写不敏感)**
+
+### 2.2.3 修饰符
+
+指令后面可以使用 `.` 连接修饰符，用于指定指令以某种特殊方式绑定。例如：
+
+```html
+<!-- 提交事件不再重载页面 -->
+<form v-on:submit.prevent="onSubmit"></form>
+<!--输入时只取数字-->
+<input type="text" v-model.number="age">
+<!--输入时过滤首尾空格-->
+<input type="text" v-model.trim="msg">
+```
+
