@@ -9,3 +9,7 @@ Vue 官方文档中“介绍”里的内容。
 ## 2. [template](2.template/readme.md)
 
 Vue 模板的使用。
+
+## 3. [computed properties](3.computed_properties/readme.md)
+
+Vue 计算属性与监听器。

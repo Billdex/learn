@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>Computed Properties and Watchers</title>
+</head>
+<body>
+<h1>本页面用于练习计算属性和侦听器</h1>
+<div id="computed">
+    <h2>计算属性</h2>
+    <p>先来个计算器吧</p>
+    <table>
+        <tr>
+            <th>科目</th>
+            <th>分数</th>
+        </tr>
+        <tr v-for="course in courses">
+            <td>{{course.name}}</td>
+            <td><label>
+                <input type="number" v-model.number="course.score">
+            </label></td>
+        </tr>
+        <tr>
+            <td>总分</td>
+            <td>{{ sumOfScore }}</td>
+        </tr>
+        <tr>
+            <td>平均分</td>
+            <td>{{ avgOfScore }}</td>
+        </tr>
+    </table>
+    <p>页面加载时的时间是（计算属性）：{{ startTime }}</p>
+    <p>页面更新时的时间是（调用方法）：{{ getTime() }}</p>
+
+
+</div>
+
+
+<script src="../vue/vue.js"></script>
+<script src="computed_properties.js"></script>
+
+</body>
+</html>
