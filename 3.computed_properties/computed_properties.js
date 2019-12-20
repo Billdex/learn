@@ -11,7 +11,7 @@ var vm = new Vue({
         sumOfScore: function () {
             let sum = 0;
             for(course of this.courses){
-                sum = sum + course.score;
+                sum = sum + (course.score === '' ? 0 : course.score);
             }
             return parseFloat(sum);
         },
