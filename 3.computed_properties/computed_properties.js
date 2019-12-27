@@ -94,3 +94,16 @@ var vm2 = new Vue({
     },
 
 });
+
+var vm3 = new Vue({
+    el: "#watcher",
+    data:{
+        watchData: "something",
+        message: "框里啥都没变",
+    },
+    watch:{
+        watchData: function(newData, oldData){
+            this.message = oldData + " 改成了 " + newData;
+        }
+    },
+});

@@ -65,11 +65,14 @@
         <input type="text" v-model="inputName">
         <button @click="setName">确认修改</button>
     </label>
-
-
-
 </div>
-
+<div id="watcher">
+    <h3>侦听器</h3>
+    <label>
+        <input type="text" v-model="watchData">
+    </label>
+    {{ message }}
+</div>
 
 <script src="../vue/vue.js"></script>
 <script src="computed_properties.js"></script>
