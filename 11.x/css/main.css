@@ -9,6 +9,7 @@
 body {
     font-size: 14px;
     color: #444;
+    line-height: 1.7;
     background: #f9f9f9;
 }
 
@@ -153,6 +154,10 @@ img {
     color: #C29A76;
 }
 
+.main-promote {
+    background: #eee;
+}
+
 .main-promote .cat {
     background: #6e6568;
     color: #fff;
@@ -164,4 +169,63 @@ img {
 
 .main-promote .cat .item:hover {
     background: rgba(0, 0, 0, 0.2);
+}
+
+.main-promote .info {
+    padding: 10px;
+    background: #f9f9f9;
+    color: #888;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.main-promote .info > * {
+    margin-bottom: 10px;
+}
+
+.main-promote .info .avatar {
+    width: 50px;
+    height: 50px;
+    background: #aaa;
+    border-radius: 50%;
+    float: left;
+    margin-right: 10px;
+}
+
+.cat-promote .title:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 10px;
+    height: 22px;
+    background: #FF6A00;
+    margin-right: 10px;
+}
+
+.cat-promote .title {
+    font-size: 22px;
+}
+
+.cat-promote .cat .content .item {
+    padding: 5px;
+}
+
+.cat-promote .cat .content .item .cart {
+    height: 300px;
+    background: #B9926D;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.footer {
+    margin-top: 30px;
+    padding: 30px 0;
+    text-align: center;
+    background: #ddd;
+    color: #999;
+}
+
+.footer a {
+    color: #999;
 }
