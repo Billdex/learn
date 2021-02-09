@@ -1,0 +1,12 @@
+body {
+    border: 5px solid #888;
+}
+
+
+#menu-checkbox {
+    display: none;
+}
+
+#checkbox:checked ~ p {
+    background: lightblue;
+}
