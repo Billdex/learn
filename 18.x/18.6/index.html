@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model</title>
+</head>
+<body>
+<div id="app">
+    checked sex: {{sex}}<br>
+    <label>
+        <input v-model="sex" type="radio" value="male">
+        male
+    </label>
+    <label>
+        <input v-model="sex" type="radio" value="female">
+        female
+    </label>
+    <br>
+    checked hobbies: <span v-for="hobby in hobbies"> {{hobby}}</span><br>
+    <label>
+        <input v-model="hobbies" type="checkbox" value="sing">
+        sing
+    </label>
+    <label>
+        <input v-model="hobbies" type="checkbox" value="dance">
+        dance
+    </label>
+    <label>
+        <input v-model="hobbies" type="checkbox" value="rap">
+        rap
+    </label>
+    <label>
+        <input v-model="hobbies" type="checkbox" value="basketball">
+        basketball
+    </label>
+    <br>
+    <label>
+        <textarea v-model="article" cols="30" rows="10"></textarea>
+    </label>
+    text: {{article}}<br>
+    where are you from?<br>
+    I'm from {{fromText}}<br>
+    <label>
+        <select v-model="from">
+            <option value="1">Shanghai</option>
+            <option value="2">Beijing</option>
+            <option value="3">Shenzhen</option>
+        </select>
+    </label>
+    <br>
+    where are you destination?<br>
+    I want go to {{dest}}<br>
+    <label>
+        <select v-model="dest" multiple>
+            <option value="1">Shanghai</option>
+            <option value="2">Beijing</option>
+            <option value="3">Shenzhen</option>
+        </select>
+    </label>
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
