@@ -9,3 +9,6 @@
 
 ## go-gin-example
 跟着[煎鱼博客](https://eddycjy.com/posts/go/gin/2018-02-10-install)重新梳理一遍gin搭建web服务知识，并学习一点代码组织技巧
+
+## android-study
+《第一行代码（第三版）》书上知识练习
