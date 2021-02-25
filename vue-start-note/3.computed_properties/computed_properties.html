@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>Computed Properties and Watchers</title>
+</head>
+<body>
+<h1>本页面用于练习计算属性和侦听器</h1>
+<h2>计算属性</h2>
+<div id="computed">
+    <h3>基础用法</h3>
+    <p>先来个计算器吧</p>
+    <table>
+        <tr>
+            <th>科目</th>
+            <th>分数</th>
+        </tr>
+        <tr v-for="course in courses">
+            <td>{{course.name}}</td>
+            <td><label>
+                <input type="number" v-model.number="course.score">
+            </label></td>
+        </tr>
+        <tr>
+            <td>总分</td>
+            <td>{{ sumOfScore }}</td>
+        </tr>
+        <tr>
+            <td>平均分</td>
+            <td>{{ avgOfScore }}</td>
+        </tr>
+    </table>
+    <p>页面加载时的时间是（计算属性）：{{ startTime }}</p>
+    <p>页面更新时的时间是（调用方法）：{{ getTime() }}</p>
+    <p>再来个rgb转灰度图</p>
+    <div>
+        <label>
+            红<input type="text" v-model.number="red">
+        </label>
+        <label>
+            绿<input type="text" v-model.number="green">
+        </label>
+        <label>
+            蓝<input type="text" v-model.number="blue">
+        </label>
+        <br>
+        <label>
+            灰色值求rgb<input type="text" v-model.number="gray">
+        </label>
+    </div>
+    <div>
+        <div :style="rgbstyle">rgb: {{rgbNum}}</div>
+        <div :style="graystyle">gray: {{grayNum}}</div>
+    </div>
+</div>
+<div id="elSetter">
+    <h3 style="clear: both;">setter</h3>
+    <label>
+        <input type="text" v-model="firstName">
+        <input type="text" v-model="lastName">
+        Full Name: {{fullName}}
+    </label>
+    <br>
+    <label>
+        <input type="text" v-model="inputName">
+        <button @click="setName">确认修改</button>
+    </label>
+</div>
+<div id="watcher">
+    <h3>侦听器</h3>
+    <label>
+        <input type="text" v-model="watchData">
+    </label>
+    {{ message }}
+</div>
+
+<script src="../vue/vue.js"></script>
+<script src="computed_properties.js"></script>
+
+</body>
+</html>

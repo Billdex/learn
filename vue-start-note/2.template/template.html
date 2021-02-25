@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>Vue Template</title>
+</head>
+<body>
+
+<h1>本页面用于练习模板的相关语法</h1>
+<div id="template">
+    <h2>文本插值</h2>
+    <p>
+        <span>js表达式运算的：data1({{data1}})+data2({{data2}}) = {{data1+data2}}</span><br>
+        <span>动态绑定的：{{text}}</span><br>
+        <span v-once>使用v-once只初始化一次的：{{text}}</span>
+    </p>
+    在输入框输入修改的值
+    <label>
+        <input type="text" v-model="text" />
+    </label>
+    <h2>html文本插值</h2>
+    <p><span v-html="html">{{html}}</span></p>
+    <label>
+        <textarea v-model="html"></textarea>
+    </label>
+    <h2>指令参数</h2>
+    <a v-bind="{title: title, href: url}">这是一个链接</a><br>
+    <button v-on="{mouseenter:mEnter, mouseout:mOut}">{{buttonInfo}}</button>
+    <h2>动态参数</h2>
+    <p>
+        <a v-bind:[textattr]="url">一下是个链接，一下又只有title</a>
+        <button v-on:click="urltotitle">点我改变类型</button>
+        <span>想象力有限，暂时不知道可以用来做什么</span>
+    </p>
+    <h2>修饰符</h2>
+    <p>
+        <span>限定数字(包含其他非空白字符时只对开头的数字生效)：{{ modifierNum }}</span>
+        <label>
+            <input type="text" v-model.number="modifierNum">
+        </label>
+        <br>
+        <span>去除首尾空格：{{ modifierTrim }}</span>
+        <label>
+            <input type="text" v-model.trim="modifierTrim">
+        </label>
+    </p>
+
+
+
+</div>
+
+
+<script src="../vue/vue.js"></script>
+<script src="template.js"></script>
+
+</body>
+</html>
