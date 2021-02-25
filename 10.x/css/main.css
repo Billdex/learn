@@ -1,0 +1,81 @@
+body {
+    background: #282C34;
+    line-height: 1.5;
+}
+
+a, body{
+    color: #eee;
+}
+
+a {
+    text-decoration: none;
+}
+
+.side-bar {
+    position: fixed;
+    float: left;
+    width: 20%;
+}
+
+.side-bar > * {
+    padding: 15px 20px;
+}
+
+.side-bar .nav a, .side-bar .tag-list a {
+    display: block;
+    padding: 5px 10px;
+    color: #aaa;
+    transition: color 200ms;
+}
+.side-bar .nav a:hover,
+.side-bar .tag-list a:hover {
+    color: #eee;
+}
+
+.side-bar .nav a {
+    font-weight: 700;
+}
+
+.main {
+    float: right;
+    width: 80%;
+    color: #282C34;
+}
+
+.header .logo {
+    line-height: 1;
+    border: 5px solid;
+    padding: 10px 20px;
+    font-size: 30px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.article-list, .article {
+    padding: 20px 30px;
+    background: #eee;
+    margin-right: 30%;
+    box-shadow: 0 0 10px rgba(140,180,90,0.5);
+}
+
+.article-list .item {
+    margin-bottom: 25px;
+}
+
+.article-list .item > *,
+.article > * {
+    margin: 10px 0;
+}
+
+.article-list .item .title,
+.article .title {
+    color: #333;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.article-list .item .status,
+.article .status {
+    font-size: 13px;
+    color: #666;
+}

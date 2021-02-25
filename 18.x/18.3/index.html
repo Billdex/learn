@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-bind</title>
+    <style>
+        .isChecked {
+            background: lightblue;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="radio" id="one" value="vue" v-model="picked">
+    <label for="one" :class="checkedVue">Vue</label>
+    <input type="radio" id="two" value="react" v-model="picked">
+    <label for="two" :class="checkedReact">React</label>
+    <input type="radio" id="three" value="angular" v-model="picked">
+    <label for="three" :class="checkedAngular">Angular</label>
+    <br>
+    <img v-bind:src="image" alt="">
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

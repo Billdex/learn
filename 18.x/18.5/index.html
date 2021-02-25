@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model</title>
+</head>
+<body>
+<div id="app">
+    <div>
+        <input type="text" v-model.lazy="lazyText">
+        <pre>惰性加载 v-model.lazy：{{lazyText}}</pre>
+    </div>
+    <div>
+        <input type="text" v-model.trim="trimText">
+        <pre>去除首尾空格 v-model.trim: {{trimText}}</pre>
+    </div>
+    <div>
+        <input type="text" v-model.number="numText" type="number">
+        限定数字 v-model.number: {{numText}}
+    </div>
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
