@@ -11,15 +11,25 @@ import kotlin.math.log
 
 class SecondActivity : AppCompatActivity() {
     var clickCount:Int = 0
+    val tag = "SecondActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("","启动secondacivity")
+        Log.d(tag,"onCreate")
         setContentView(R.layout.second_layout)
         clickCount = intent.getIntExtra("clickCount", 0)
         second_button.setOnClickListener {
             clickCount += 1
             Toast.makeText(this, "按钮点击了${clickCount}次", Toast.LENGTH_SHORT).show()
             Log.d("SecondActivity", "按钮点击了$clickCount 次")
+        }
+        single_top_open.setOnClickListener {
+            Toast.makeText(this, "尝试启动SecondActivity", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
+        }
+        start_third.setOnClickListener {
+            val intent = Intent(this, ThirdActivity::class.java)
+            startActivity(intent)
         }
     }
 

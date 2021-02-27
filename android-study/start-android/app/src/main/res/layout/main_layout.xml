@@ -34,4 +34,10 @@
         android:layout_height="wrap_content"
         android:text="stand启动MainActivity"/>
 
+    <Button
+        android:id="@+id/single_top_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="singleTop启动SecondActivity"/>
+
 </LinearLayout>

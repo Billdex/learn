@@ -2,6 +2,7 @@ package com.example.androidstudy
 
 import android.app.Activity
 import android.content.Intent
+import android.net.InetAddresses
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -46,6 +47,10 @@ class MainActivity : AppCompatActivity() {
         }
         stand_open.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        single_top_open.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
             startActivity(intent)
         }
 
