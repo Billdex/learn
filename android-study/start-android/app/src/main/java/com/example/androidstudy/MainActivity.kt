@@ -13,7 +13,7 @@ import android.widget.Button
 import android.widget.Toast
 import kotlinx.android.synthetic.main.main_layout.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     val tag = "MainActivity"
     var clickCount: Int = 5
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +23,7 @@ class MainActivity : AppCompatActivity() {
 //        val button1: Button = findViewById(R.id.button1)
         main_button1.setOnClickListener {
             Toast.makeText(this, "显式启动 Second Activity", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, SecondActivity::class.java)
-            intent.putExtra("clickCount", clickCount)
-            startActivity(intent)
+            SecondActivity.actionStart(this, clickCount)
         }
         main_button2.setOnClickListener {
             Toast.makeText(this, "隐式启动 Second Activity", Toast.LENGTH_SHORT).show()

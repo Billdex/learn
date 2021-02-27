@@ -1,6 +1,7 @@
 package com.example.androidstudy
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +10,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.second_layout.*
 import kotlin.math.log
 
-class SecondActivity : AppCompatActivity() {
+class SecondActivity : BaseActivity() {
     var clickCount:Int = 0
     val tag = "SecondActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,5 +41,13 @@ class SecondActivity : AppCompatActivity() {
         intent.putExtra("data_return", clickCount)
         setResult(RESULT_OK, intent)
         finish()
+    }
+
+    companion object {
+        fun actionStart(context: Context, data: Int) {
+            val intent = Intent(context, SecondActivity::class.java)
+            intent.putExtra("clickCount", data)
+            context.startActivity(intent)
+        }
     }
 }
