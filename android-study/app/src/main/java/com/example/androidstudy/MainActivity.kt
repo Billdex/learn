@@ -1,9 +1,11 @@
 package com.example.androidstudy
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -11,6 +13,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.main_layout.*
 
 class MainActivity : AppCompatActivity() {
+    var clickCount: Int = 5
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_layout)
@@ -18,13 +21,16 @@ class MainActivity : AppCompatActivity() {
         main_button1.setOnClickListener {
             Toast.makeText(this, "显式启动 Second Activity", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra("clickCount", clickCount)
             startActivity(intent)
         }
         main_button2.setOnClickListener {
             Toast.makeText(this, "隐式启动 Second Activity", Toast.LENGTH_SHORT).show()
             val intent = Intent("com.example.androidstudy.ACTION_START")
             intent.addCategory("com.example.androidstudy.MY_CATEGORY")
-            startActivity(intent)
+            intent.putExtra("clickCount", clickCount)
+//            startActivity(intent)
+            startActivityForResult(intent, 1)
         }
         main_open_baidu.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
@@ -35,6 +41,21 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse("tel:10086")
             startActivity(intent)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("MainActivity", "收到返回数据")
+        when (requestCode) {
+            1 -> if (resultCode == RESULT_OK) {
+                Log.d("MainActivity", "是1的返回")
+                val returnedData = data?.getIntExtra("data_return", 0)
+                Log.d("MainActivity", "总共点击了${returnedData}次")
+                if (returnedData != null) {
+                    clickCount = returnedData.toInt()
+                }
+            }
         }
     }
 
