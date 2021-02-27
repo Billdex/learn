@@ -13,9 +13,11 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.main_layout.*
 
 class MainActivity : AppCompatActivity() {
+    val tag = "MainActivity"
     var clickCount: Int = 5
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(tag, "onCreate")
         setContentView(R.layout.main_layout)
 //        val button1: Button = findViewById(R.id.button1)
         main_button1.setOnClickListener {
@@ -42,6 +44,13 @@ class MainActivity : AppCompatActivity() {
             intent.data = Uri.parse("tel:10086")
             startActivity(intent)
         }
+        stand_open.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
