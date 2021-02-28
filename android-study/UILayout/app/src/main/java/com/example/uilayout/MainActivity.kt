@@ -10,12 +10,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         button1.setOnClickListener(this)
+        button2.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.button1 -> {
                 LayoutWeightActivity.actionStart(this)
+            }
+            R.id.button2 -> {
+                RelativeLayoutActivity.actionStart(this)
             }
         }
     }
