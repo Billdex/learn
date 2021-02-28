@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
         button1.setOnClickListener(this)
         button2.setOnClickListener(this)
+        button3.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -20,6 +21,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.button2 -> {
                 RelativeLayoutActivity.actionStart(this)
+            }
+            R.id.button3 -> {
+                FrameLayoutActivity.actionStart(this)
             }
         }
     }
