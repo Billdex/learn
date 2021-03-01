@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/main_button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="intent显式启动SecondActivity" />
+
+    <Button
+        android:id="@+id/main_button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="intent隐式启动SecondActivity"/>
+
+    <Button
+        android:id="@+id/main_open_baidu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开百度"/>
+
+    <Button
+        android:id="@+id/main_open_tel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拨号10086"/>
+
+    <Button
+        android:id="@+id/stand_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="stand启动MainActivity"/>
+
+    <Button
+        android:id="@+id/single_top_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="singleTop启动SecondActivity"/>
+
+</LinearLayout>
