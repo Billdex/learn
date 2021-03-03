@@ -23,10 +23,9 @@ func main() {
 		WriteTimeout:   setting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
-	s.ListenAndServe()
 	go func() {
-		if err := s.ListenAndServe(); err != nil {
-			log.Printf("Listen: %s\n", err)
+		if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Listen: %s\n", err)
 		}
 	}()
 
