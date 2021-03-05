@@ -24,23 +24,20 @@ type Model struct {
 	ModifiedOn int `json:"modified_on"`
 }
 
-func init() {
+func SetUp() {
 	var (
 		err                                               error
 		dbType, dbName, user, password, host, tablePrefix string
 	)
 
-	sec, err := setting.Cfg.GetSection("database")
-	if err != nil {
-		log.Fatal(2, "Fail to get section 'database': %v", err)
-	}
+	sec := setting.DatabaseSetting
 
-	dbType = sec.Key("TYPE").String()
-	dbName = sec.Key("NAME").String()
-	user = sec.Key("USER").String()
-	password = sec.Key("PASSWORD").String()
-	host = sec.Key("HOST").String()
-	tablePrefix = sec.Key("TABLE_PREFIX").String()
+	dbType = sec.Type
+	dbName = sec.Name
+	user = sec.User
+	password = sec.Password
+	host = sec.Host
+	tablePrefix = sec.TablePrefix
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		user,

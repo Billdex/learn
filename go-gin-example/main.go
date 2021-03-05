@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"go-gin-example/models"
+	"go-gin-example/pkg/logging"
 	"go-gin-example/routers"
 	"log"
 	"net/http"
@@ -14,13 +16,18 @@ import (
 )
 
 func main() {
-	router := routers.InitRouter()
 
+	setting.Setup()
+	models.SetUp()
+	logging.SetUp()
+
+	router := routers.InitRouter()
+	router.Run()
 	s := &http.Server{
-		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
+		Addr:           fmt.Sprintf(":%d", setting.ServerSetting.HttpPort),
 		Handler:        router,
-		ReadTimeout:    setting.ReadTimeout,
-		WriteTimeout:   setting.WriteTimeout,
+		ReadTimeout:    setting.ServerSetting.ReadTimeout,
+		WriteTimeout:   setting.ServerSetting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
 	go func() {
@@ -36,7 +43,7 @@ func main() {
 
 	log.Println("Shutdown Server ...")
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(setting.HTTPPort)*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(setting.ServerSetting.ReadTimeout)*time.Second)
 	defer cancel()
 	if err := s.Shutdown(ctx); err != nil {
 		log.Fatal("Server Shutdown:", err)
