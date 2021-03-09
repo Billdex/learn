@@ -29,59 +29,59 @@ func (article *Article) BeforeUpdate(scope *gorm.DB) error {
 	return nil
 }
 
-func ExistArticleByID(id int) bool {
+func ExistArticleByID(id int) (bool, error) {
 	var article Article
-	db.Select("id").Where("id = ?", id).First(&article)
+	err := db.Select("id").Where("id = ?", id).First(&article).Error
 
 	if article.ID > 0 {
-		return true
+		return true, nil
 	}
 
-	return false
+	return false, err
 }
 
-func GetArticleTotal(maps interface{}) (count int64) {
-	db.Model(&Article{}).Where(maps).Count(&count)
+func GetArticleTotal(maps interface{}) (count int64, err error) {
+	err = db.Model(&Article{}).Where(maps).Count(&count).Error
+
+	return count, err
+}
+
+func GetArticles(pageNum int, pageSize int, maps interface{}) (articles []*Article, err error) {
+	err = db.Preload("Tag").Where(maps).Offset(pageNum).Limit(pageSize).Find(&articles).Error
 
 	return
 }
 
-func GetArticles(pageNum int, pageSize int, maps interface{}) (articles []Article) {
-	db.Preload("Tag").Where(maps).Offset(pageNum).Limit(pageSize).Find(&articles)
-
-	return
-}
-
-func GetArticle(id int) (article Article) {
-	db.Where("id = ?", id).First(&article)
+func GetArticle(id int) (article *Article, err error) {
+	err = db.Where("id = ?", id).First(&article).Error
+	if err != nil {
+		return
+	}
 	tag := new(Tag)
-	db.Where("id = ?", article.TagID).First(tag)
+	err = db.Where("id = ?", article.TagID).First(tag).Error
+	if err != nil {
+		return
+	}
 	article.Tag = *tag
 
 	return
 }
 
-func EditArticle(id int, data interface{}) bool {
-	db.Model(&Article{}).Where("id = ?", id).Updates(data)
-
-	return true
+func EditArticle(id int, data interface{}) error {
+	return db.Model(&Article{}).Where("id = ?", id).Updates(data).Error
 }
 
-func AddArticle(data map[string]interface{}) bool {
-	db.Create(&Article{
+func AddArticle(data map[string]interface{}) error {
+	return db.Create(&Article{
 		TagID:     data["tag_id"].(int),
 		Title:     data["title"].(string),
 		Desc:      data["desc"].(string),
 		Content:   data["content"].(string),
 		CreatedBy: data["created_by"].(string),
 		State:     data["state"].(int),
-	})
-
-	return true
+	}).Error
 }
 
-func DeleteArticle(id int) bool {
-	db.Where("id = ?", id).Delete(Article{})
-
-	return true
+func DeleteArticle(id int) error {
+	return db.Where("id = ?", id).Delete(Article{}).Error
 }

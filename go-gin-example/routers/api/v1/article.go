@@ -1,7 +1,9 @@
 package v1
 
 import (
+	"go-gin-example/pkg/app"
 	"go-gin-example/pkg/logging"
+	"go-gin-example/service/cache_service"
 	"log"
 	"net/http"
 
@@ -46,44 +48,35 @@ func GetArticle(c *gin.Context) {
 
 //获取多个文章
 func GetArticles(c *gin.Context) {
-	data := make(map[string]interface{})
-	maps := make(map[string]interface{})
+	appG := app.Gin{c}
+	id := com.StrTo(c.Param("id")).MustInt()
 	valid := validation.Validation{}
+	valid.Min(id, 1, "id").Message("ID必须大于0")
 
-	var state int = -1
-	if arg := c.Query("state"); arg != "" {
-		state = com.StrTo(arg).MustInt()
-		maps["state"] = state
-
-		valid.Range(state, 0, 1, "state").Message("状态只允许0或1")
+	if valid.HasErrors() {
+		app.MarkErrors(valid.Errors)
+		appG.Response(http.StatusOK, e.INVALID_PARAMS, nil)
+		return
 	}
 
-	var tagId int = -1
-	if arg := c.Query("tag_id"); arg != "" {
-		tagId = com.StrTo(arg).MustInt()
-		maps["tag_id"] = tagId
-
-		valid.Min(tagId, 1, "tag_id").Message("标签ID必须大于0")
+	articleService := cache_service.Article{ID: id}
+	exists, err := articleService.ExistByID()
+	if err != nil {
+		appG.Response(http.StatusOK, e.ERROR_CHECK_EXIST_ARTICLE_FAIL, nil)
+		return
+	}
+	if !exists {
+		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_ARTICLE, nil)
+		return
 	}
 
-	code := e.INVALID_PARAMS
-	if !valid.HasErrors() {
-		code = e.SUCCESS
-
-		data["lists"] = models.GetArticles(util.GetPage(c), setting.AppSetting.PageSize, maps)
-		data["total"] = models.GetArticleTotal(maps)
-
-	} else {
-		for _, err := range valid.Errors {
-			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
-		}
+	article, err := articleService.Get()
+	if err != nil {
+		appG.Response(http.StatusOK, e.ERROR_GET_ARTICLE_FAIL, nil)
+		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"msg":  e.GetMsg(code),
-		"data": data,
-	})
+	appG.Response(http.StatusOK, e.SUCCESS, article)
 }
 
 //新增文章
