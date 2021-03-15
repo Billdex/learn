@@ -6,7 +6,7 @@ import (
 )
 
 func Setup() *gin.Engine {
-	r := gin.Default()
+	r := gin.New()
 
 	// 通过sleep模拟业务所需时间测试可承载并发数
 	simGroup := r.Group("/sim")
