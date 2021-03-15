@@ -1,0 +1,26 @@
+[app]
+jwt_secret = salt
+# token超时时间，timeout单位为分钟， refresh单位为天
+jwt_timeout = 10
+jwt_refresh = 7
+
+[server]
+# gin run mode: debug or release
+run_mode      = debug
+http_port     = 30200
+read_timeout  = 60
+write_timeout = 60
+
+[database]
+host     = 127.0.0.1:3306
+user     = username
+password = password
+database = cubic
+
+[log]
+# log style: JSON, CONSOLE
+style = CONSOLE
+# log level: DEBUG, INFO, WARN, ERROR, PANIC, FATAL
+level = DEBUG
+# log file path
+file  = ./logs/cubic.log

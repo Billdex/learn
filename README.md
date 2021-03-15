@@ -15,3 +15,6 @@
 
 ## go-image-processing
 go语言数字图像处理的一些尝试
+
+## gin-benchmark
+尝试对web开发的部分场景做压测，摸索实际性能情况与常见瓶颈。使用的测试工具为[go-wrk](https://github.com/adjust/go-wrk)
