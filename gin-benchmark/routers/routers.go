@@ -30,7 +30,8 @@ func Setup() *gin.Engine {
 	// 加入数据库读写测试该情况下的消耗时间与并发数(数据库的io性能会成为该部分瓶颈)
 	dbGroup := r.Group("/db")
 	{
-		dbGroup.GET("/read/:count", controllers.ReadDBHandler)
+		dbGroup.GET("/read/str/:count", controllers.ReadStrDBHandler)
+		dbGroup.GET("/read/int/:count", controllers.ReadIntDBHandler)
 		dbGroup.GET("/write/:count", controllers.WriteDBHandler)
 	}
 

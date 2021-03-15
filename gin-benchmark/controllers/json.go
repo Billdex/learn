@@ -40,9 +40,7 @@ var resp = JsonResp{
 }
 
 func JsonHelloHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, InnerStruct{
-		Msg: "Hello world!",
-	})
+
 }
 
 func JsonBigHandler(c *gin.Context) {

@@ -15,9 +15,9 @@ func Setup(dsn string) error {
 		return err
 	}
 
-	DB.ShowSQL(true)
-	DB.SetMaxIdleConns(10)
-	DB.SetMaxOpenConns(20)
+	DB.ShowSQL(false)
+	DB.SetMaxIdleConns(20)
+	DB.SetMaxOpenConns(40)
 	return nil
 
 }
