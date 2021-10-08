@@ -53,7 +53,6 @@ func SetUp() {
 	default:
 		dialector = mysql.Open(dsn)
 	}
-
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
 		logger.Config{
