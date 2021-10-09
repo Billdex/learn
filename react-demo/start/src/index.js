@@ -46,6 +46,7 @@ class Game extends React.Component {
         super(props);
         this.state = {
             history: [{
+                step: -1,
                 squares: Array(9).fill(null),
             }],
             stepNumber: 0,
@@ -62,6 +63,7 @@ class Game extends React.Component {
         squares[i] = this.state.xIsNext ? 'X' : 'O';
         this.setState({
             history: history.concat([{
+                step: i,
                 squares: squares,
             }]),
             stepNumber: history.length,
@@ -84,9 +86,18 @@ class Game extends React.Component {
             const desc = move ?
                 '回到第' + move + '步' :
                 '重新开始';
+
+            let posDesc = ''
+            if (step.step !== -1) {
+                const stepRole = move % 2 ? 'X' : 'O'
+                const col = step.step % 3 + 1
+                const row = Math.floor(step.step / 3) + 1
+                posDesc = stepRole + '(' + row + ',' + col + ')'
+            }
             return (
                 <li key={{move}}>
                     <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    {posDesc}
                 </li>
             )
         })
