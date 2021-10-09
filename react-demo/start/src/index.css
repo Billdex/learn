@@ -32,6 +32,10 @@ ol, ul {
     width: 34px;
 }
 
+.square-high {
+    color: pink;
+}
+
 .square:focus {
     outline: none;
 }
@@ -47,4 +51,14 @@ ol, ul {
 
 .game-info {
     margin-left: 20px;
+}
+
+.step-current {
+    border: solid 1px #999999;
+    background: pink;
+}
+
+.step-other {
+    border: solid 1px #999999;
+    background: #EEEEEE;
 }
