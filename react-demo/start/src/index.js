@@ -50,6 +50,7 @@ class Game extends React.Component {
                 squares: Array(9).fill(null),
             }],
             stepNumber: 0,
+            buttonReverse: false,
             xIsNext: true,
         };
     }
@@ -91,10 +92,8 @@ class Game extends React.Component {
         const winner = result.winner;
         const lines = result.lines;
 
-        const moves = history.map((step, move) => {
-            const desc = move ?
-                '回到第' + move + '步' :
-                '重新开始';
+        let moves = history.slice(1,).map((step, move) => {
+            const desc = '回到第' + (move+1) + '步'
 
             let posDesc = ''
             if (step.step !== -1) {
@@ -106,12 +105,16 @@ class Game extends React.Component {
             return (
                 <li key={{move}}>
                     <button
-                        className={this.getButtonClass(move)}
-                        onClick={() => this.jumpTo(move)}>{desc}</button>
+                        className={this.getButtonClass(move+1)}
+                        onClick={() => this.jumpTo(move+1)}>{desc}</button>
                     {posDesc}
                 </li>
             )
         })
+
+        if (this.state.buttonReverse) {
+            moves = moves.reverse()
+        }
 
         let status;
         if (winner) {
@@ -121,6 +124,7 @@ class Game extends React.Component {
         } else {
             status = "轮到" + (this.state.xIsNext ? 'X' : 'O') + "落子";
         }
+
         return (
             <div className="game">
                 <div className="game-board">
@@ -132,6 +136,10 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
+                    <div>
+                        <button onClick={() => {this.setState({history: this.state.history.slice(0, 1), stepNumber: 0, xIsNext: true,})}}>重新开始</button>
+                        <button onClick={() => {this.setState({buttonReverse: !this.state.buttonReverse})}}>调整按钮顺序</button>
+                    </div>
                     <ul>{moves}</ul>
                 </div>
             </div>
