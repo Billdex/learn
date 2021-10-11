@@ -16,7 +16,8 @@ function Square(props) {
 class Board extends React.Component {
     renderSquare(i) {
         let shouldHigh;
-        shouldHigh = this.props.line && this.props.line.includes(i)
+        shouldHigh = this.props.step === i ||
+            this.props.line && this.props.line.includes(i)
         return <Square
             shouldHigh={shouldHigh}
             value={this.props.squares[i]}
@@ -128,7 +129,7 @@ class Game extends React.Component {
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board
+                    <Board step={current.step}
                     squares={current.squares}
                     line={lines}
                     onClick={(i) => this.handleClick(i)}
