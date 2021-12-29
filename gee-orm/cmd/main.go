@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"geeorm"
 	_ "github.com/mattn/go-sqlite3"
+	"log"
 )
 
 func main() {
@@ -15,5 +15,5 @@ func main() {
 	_, _ = s.Raw("CREATE TABLE User(Name text);").Exec()
 	result, _ := s.Raw("INSERT INTO User(`Name`) values (?), (?)", "Tom", "Sam").Exec()
 	count, _ := result.RowsAffected()
-	fmt.Printf("Exec success, %d affected\n", count)
+	log.Println("Exec success, %d affected\n", count)
 }

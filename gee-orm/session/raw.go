@@ -2,12 +2,16 @@ package session
 
 import (
 	"database/sql"
+	"geeorm/dialect"
+	"geeorm/schema"
 	"log"
 	"strings"
 )
 
 type Session struct {
-	db *sql.DB
+	db       *sql.DB
+	dialect  dialect.Dialect
+	refTable *schema.Schema
 	// Sql 语句 Builder
 	sql strings.Builder
 	// 记录各占位符的对应值，最后进行填充用
@@ -15,8 +19,11 @@ type Session struct {
 }
 
 // New 根据一个 *sql.DB 初始化一个 Session
-func New(db *sql.DB) *Session {
-	return &Session{db: db}
+func New(db *sql.DB, dialect dialect.Dialect) *Session {
+	return &Session{
+		db:      db,
+		dialect: dialect,
+	}
 }
 
 // Clear 清除缓存语句与值

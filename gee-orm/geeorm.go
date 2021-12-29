@@ -2,13 +2,15 @@ package geeorm
 
 import (
 	"database/sql"
+	"geeorm/dialect"
 	"log"
 
 	"geeorm/session"
 )
 
 type Engine struct {
-	db *sql.DB
+	db      *sql.DB
+	dialect dialect.Dialect
 }
 
 const (
@@ -28,7 +30,12 @@ func NewEngine(driver, source string) (e *Engine, err error) {
 		log.Println(err)
 		return
 	}
-	e = &Engine{db: db}
+	dial, ok := dialect.GetDialect(driver)
+	if !ok {
+		log.Printf("dialect %s Not Found", driver)
+		return
+	}
+	e = &Engine{db: db, dialect: dial}
 	log.Println("Connect database success")
 	return
 }
@@ -41,5 +48,5 @@ func (engine *Engine) Close() {
 }
 
 func (engine *Engine) NewSession() *session.Session {
-	return session.New(engine.db)
+	return session.New(engine.db, engine.dialect)
 }
