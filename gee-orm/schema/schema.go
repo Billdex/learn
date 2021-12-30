@@ -15,11 +15,14 @@ type Field struct {
 
 // Schema represents a table of database
 type Schema struct {
-	Model      interface{}
-	Name       string
-	Fields     []*Field
+	Model interface{}
+	Name  string
+	// 字段信息列表
+	Fields []*Field
+	// 字段名列表
 	FieldNames []string
-	fieldMap   map[string]*Field
+	// 字段信息 map
+	fieldMap map[string]*Field
 }
 
 func (schema *Schema) GetField(name string) *Field {
@@ -28,6 +31,7 @@ func (schema *Schema) GetField(name string) *Field {
 
 // Parse 用于将任意对象解析到 Schema 实例上
 func Parse(dest interface{}, d dialect.Dialect) *Schema {
+	// 获取传入的 dest 结构的类型信息
 	modelType := reflect.Indirect(reflect.ValueOf(dest)).Type()
 	schema := &Schema{
 		Model:    dest,

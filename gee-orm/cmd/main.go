@@ -15,5 +15,5 @@ func main() {
 	_, _ = s.Raw("CREATE TABLE User(Name text);").Exec()
 	result, _ := s.Raw("INSERT INTO User(`Name`) values (?), (?)", "Tom", "Sam").Exec()
 	count, _ := result.RowsAffected()
-	log.Println("Exec success, %d affected\n", count)
+	log.Printf("Exec success, %d affected\n", count)
 }
