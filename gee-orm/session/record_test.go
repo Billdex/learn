@@ -3,9 +3,9 @@ package session
 import "testing"
 
 var (
-	user1 = &User{"Tom", 18}
-	user2 = &User{"Sam", 25}
-	user3 = &User{"Jack", 25}
+	user1 = &User{Name: "Tom", Age: 18}
+	user2 = &User{Name: "Sam", Age: 25}
+	user3 = &User{Name: "Jack", Age: 25}
 )
 
 func testRecordInit(t *testing.T) *Session {
@@ -32,7 +32,34 @@ func TestSession_Find(t *testing.T) {
 	s := testRecordInit(t)
 	var users []User
 	if err := s.Find(&users); err != nil || len(users) != 2 {
-		t.Fatal("failed to query all")
+		t.Fatal("failed to query all", err)
 	}
 	t.Log(users)
+}
+
+func TestSession_WhereFind(t *testing.T) {
+	s := testRecordInit(t)
+	var users []User
+	if err := s.Where("Age = ?", 18).Find(&users); err != nil || len(users) != 1 {
+		t.Fatal("failed to query age 18 user", err)
+	}
+	t.Log(users)
+}
+
+func TestSession_WhereGet(t *testing.T) {
+	s := testRecordInit(t)
+	var user User
+	if err := s.Where("name = ?", "Sam").Get(&user); err != nil || user.Age != 25 {
+		t.Fatal("failed to get sam user info", err)
+	}
+	t.Log(user)
+}
+
+func TestSession_First(t *testing.T) {
+	s := testRecordInit(t)
+	var user User
+	if err := s.First(&user); err != nil {
+		t.Fatal("failed to get first user", err)
+	}
+	t.Log(user)
 }

@@ -62,17 +62,19 @@ func (s *Session) Exec() (result sql.Result, err error) {
 	return
 }
 
-// QueryRow gets a record from db
+// QueryRow 查询单条语句
 func (s *Session) QueryRow() *sql.Row {
 	defer s.Clear()
 	log.Println(s.sql.String(), s.sqlVars)
+	// sql.DB.QueryRow 返回单个结果
 	return s.DB().QueryRow(s.sql.String(), s.sqlVars...)
 }
 
-// QueryRows gets a list of records from db
+// QueryRows 查询出一个列表
 func (s *Session) QueryRows() (rows *sql.Rows, err error) {
 	defer s.Clear()
 	log.Println(s.sql.String(), s.sqlVars)
+	// sql.DB.Query 返回结果列表
 	if rows, err = s.DB().Query(s.sql.String(), s.sqlVars...); err != nil {
 		log.Println(err)
 	}

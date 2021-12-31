@@ -52,7 +52,6 @@ func _values(values ...interface{}) (string, []interface{}) {
 		vars = append(vars, v...)
 	}
 	return sql.String(), vars
-
 }
 
 func _select(values ...interface{}) (string, []interface{}) {

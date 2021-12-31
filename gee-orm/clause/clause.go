@@ -34,6 +34,7 @@ func (c *Clause) Build(orders ...Type) (string, []interface{}) {
 	for _, order := range orders {
 		if sql, ok := c.sql[order]; ok {
 			sqls = append(sqls, sql)
+			// 对于无参数的来说，c.sqlVars[order] 的长度为0, 相当于没有拼接到后面的参数列表里面
 			vars = append(vars, c.sqlVars[order]...)
 		}
 	}

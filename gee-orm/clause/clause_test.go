@@ -8,6 +8,7 @@ import (
 func testSelect(t *testing.T) {
 	var clause Clause
 	clause.Set(LIMIT, 3)
+	// 从 User 表中选出 *
 	clause.Set(SELECT, "User", []string{"*"})
 	clause.Set(WHERE, "Name = ?", "Tom")
 	clause.Set(ORDERBY, "Age ASC")
