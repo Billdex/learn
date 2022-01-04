@@ -13,6 +13,11 @@ func (s *Session) Where(desc string, args ...interface{}) *Session {
 	return s
 }
 
+func (s *Session) OrderBy(column string) *Session {
+	s.clause.Set(clause.ORDERBY, column)
+	return s
+}
+
 func (s *Session) Limit(n int) *Session {
 	s.clause.Set(clause.LIMIT, n)
 	return s
@@ -103,4 +108,47 @@ func (s *Session) First(value interface{}) error {
 	}
 	dest.Set(destSlice.Index(0))
 	return nil
+}
+
+// Update 参数可以为 map 或键值对
+func (s *Session) Update(kv ...interface{}) (int64, error) {
+	// 判断是否为 map 类型，是 map 类型则可以断言之后直接用
+	m, ok := kv[0].(map[string]interface{})
+	// 如果不是 map，则按照 [key1, value1, key2, value2.....] 这种格式进行解析，转换成 map 格式
+	if !ok {
+		m = make(map[string]interface{})
+		for i := 0; i < len(kv); i += 2 {
+			m[kv[i].(string)] = kv[i+1]
+		}
+	}
+	s.clause.Set(clause.UPDATE, s.RefTable().Name, m)
+	sql, vars := s.clause.Build(clause.UPDATE, clause.WHERE)
+	result, err := s.Raw(sql, vars...).Exec()
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected()
+}
+
+// Delete 删除指定数据，需要预先调用 Where 指定需要删除的数据的条件
+func (s *Session) Delete() (int64, error) {
+	s.clause.Set(clause.DELETE, s.RefTable().Name)
+	sql, vars := s.clause.Build(clause.DELETE, clause.WHERE)
+	result, err := s.Raw(sql, vars...).Exec()
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected()
+}
+
+// Count 查询符合条件的结果数量
+func (s *Session) Count() (int64, error) {
+	s.clause.Set(clause.COUNT, s.RefTable().Name)
+	sql, vars := s.clause.Build(clause.COUNT, clause.WHERE)
+	row := s.Raw(sql, vars...).QueryRow()
+	var tmp int64
+	if err := row.Scan(&tmp); err != nil {
+		return 0, err
+	}
+	return tmp, nil
 }
