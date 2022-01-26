@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
+import { Remarkable } from 'remarkable'
 
 class TodoApp extends React.Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class TodoApp extends React.Component {
                 <h2>Todo List</h2>
                 <TodoList items={this.state.items}/>
                 <form onSubmit={this.handleSubmit}>
-                    <input onChange={this.handleChange} value={this.state.text}/> <br/>
+                    <textarea onChange={this.handleChange} value={this.state.text}/> <br/>
                     <button>Add Todo</button>
                 </form>
             </div>
@@ -27,11 +28,10 @@ class TodoApp extends React.Component {
 
     handleChange(e) {
         this.setState({text: e.target.value})
-        console.log(this.state.text)
     }
 
     handleSubmit(e) {
-        // 清楚默认刷新行为
+        // 清除默认刷新行为
         e.preventDefault()
         if (this.state.text.length <= 1) {
             return
@@ -65,9 +65,18 @@ class TodoList extends React.Component {
 }
 
 class TodoItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.md = new Remarkable();
+    }
+    getRawMarkup() {
+        return {
+            __html: this.md.render(this.props.content)
+        }
+    }
     render() {
         return (
-            <li>{this.props.content}</li>
+            <li><div dangerouslySetInnerHTML={this.getRawMarkup()} /></li>
         )
     }
 }
