@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import { Remarkable } from 'remarkable'
+import { Toggle } from './toggle'
 
 class TodoApp extends React.Component {
     constructor(props) {
@@ -76,7 +77,7 @@ class TodoItem extends React.Component {
     }
     render() {
         return (
-            <li><div dangerouslySetInnerHTML={this.getRawMarkup()} /></li>
+            <li><Toggle />{this.props.content}</li>
         )
     }
 }
