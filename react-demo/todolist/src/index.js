@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import { nanoid } from 'nanoid'
-import { Toggle } from './toggle'
+import {nanoid} from 'nanoid'
+import {Toggle} from './toggle'
+
+import "./index.css"
 
 class TodoApp extends React.Component {
     constructor(props) {
@@ -21,9 +23,10 @@ class TodoApp extends React.Component {
         return (
             <div>
                 <h2>Todo List</h2>
-                <TodoList todoItems={this.state.todoItems} doneItems={this.state.doneItems} onItemFinished={this.handleItemFinished} onItemReTodo={this.handleItemReTodo} />
+                <TodoList todoItems={this.state.todoItems} doneItems={this.state.doneItems}
+                          onItemFinished={this.handleItemFinished} onItemReTodo={this.handleItemReTodo}/>
                 <form onSubmit={this.handleSubmit}>
-                    <textarea onChange={this.handleChange} value={this.state.text}/> <br/>
+                    <input onChange={this.handleChange} value={this.state.text}/> <br/>
                     <button>Add Todo</button>
                 </form>
             </div>
@@ -46,14 +49,16 @@ class TodoApp extends React.Component {
             finished: false
         };
         this.setState({
-                todoItems: this.state.todoItems.concat(item),
-                text: ''
-            });
+            todoItems: this.state.todoItems.concat(item),
+            text: ''
+        });
     }
 
     handleItemFinished(item) {
-        const todoItems = this.state.todoItems.filter((i) => i.id != item.id);
-        const doneItems = this.state.doneItems.concat(item);
+        const todoItems = this.state.todoItems.filter((i) => i.id !== item.id);
+        // 最新完成的项目放在最顶上
+        let doneItems = this.state.doneItems;
+        doneItems.unshift(item)
         this.setState({
             todoItems: todoItems,
             doneItems: doneItems
@@ -62,7 +67,7 @@ class TodoApp extends React.Component {
 
     handleItemReTodo(item) {
         const todoItems = this.state.todoItems.concat(item);
-        const doneItems = this.state.doneItems.filter((i) => i.id != item.id);
+        const doneItems = this.state.doneItems.filter((i) => i.id !== item.id);
         this.setState({
             todoItems: todoItems,
             doneItems: doneItems
@@ -107,7 +112,7 @@ class TodoItem extends React.Component {
     }
 
     outputContent() {
-        if (this.props.finished) {
+        if (this.props.item.finished) {
             return (<span><s>{this.props.item.content}</s></span>);
         } else {
             return (<span>{this.props.item.content}</span>);
@@ -117,11 +122,14 @@ class TodoItem extends React.Component {
     render() {
         return (
             <li><Toggle isToggleOn={this.props.item.finished} onToggleStateChange={
-                (toggleState) => {this.props.onItemStateChange({
-                    id: this.props.item.id,
-                    content: this.props.item.content,
-                    finished: toggleState})}
-                } /> {this.outputContent()}</li>
+                (toggleState) => {
+                    this.props.onItemStateChange({
+                        id: this.props.item.id,
+                        content: this.props.item.content,
+                        finished: toggleState
+                    })
+                }
+            }/> {this.outputContent()}</li>
         )
     }
 }
