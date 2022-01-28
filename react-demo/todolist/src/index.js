@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import { Remarkable } from 'remarkable'
 import { Toggle } from './toggle'
 
 class TodoApp extends React.Component {
@@ -47,8 +46,6 @@ class TodoApp extends React.Component {
             }
         )
     }
-
-
 }
 
 class TodoList extends React.Component {
@@ -56,9 +53,9 @@ class TodoList extends React.Component {
         return (
             <ul>
                 {this.props.items.map(
-                    item => (
-                        <TodoItem content={item.content}/>
-                    )
+                    (item, index) => {
+                        return <TodoItem key={index} content={item.content}/>
+                    }
                 )}
             </ul>
         )
@@ -68,20 +65,34 @@ class TodoList extends React.Component {
 class TodoItem extends React.Component {
     constructor(props) {
         super(props);
-        this.md = new Remarkable();
+        this.state = {
+            finished: false
+        }
+        this.handleItemStateChange = this.handleItemStateChange.bind(this)
+        this.outputContent = this.outputContent.bind(this)
     }
-    getRawMarkup() {
-        return {
-            __html: this.md.render(this.props.content)
+
+    handleItemStateChange(toggleOn) {
+        this.setState({
+            finished: toggleOn
+        });
+    }
+
+    outputContent() {
+        const finished = this.state.finished 
+        if(finished) {
+            return (<span><s>{this.props.content}</s></span>);
+        } else {
+            return (<span>{this.props.content}</span>);
         }
     }
+
     render() {
         return (
-            <li><Toggle />{this.props.content}</li>
+            <li><Toggle isToggleOn={this.state.finished} onToggleStateChange={this.handleItemStateChange} /> {this.outputContent()}</li>
         )
     }
 }
-
 
 ReactDom.render(
     <TodoApp/>,

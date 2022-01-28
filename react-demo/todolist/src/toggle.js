@@ -5,7 +5,6 @@ class Toggle extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isToggleOn: false,
             text: ""
         }
         this.handleClick = this.handleClick.bind(this)
@@ -14,15 +13,15 @@ class Toggle extends React.Component {
 
     handleClick(e) {
         e.preventDefault();
-        let isToggleOn = !this.state.isToggleOn;
+        let isToggleOn = !this.props.isToggleOn;
         this.setState({
-                isToggleOn: isToggleOn,
-                text: isToggleOn ? "√" : ""
-            });
+            text: isToggleOn ? "√" : ""
+        });
+        this.props.onToggleStateChange(isToggleOn)
     }
 
     calClassName() {
-        const stateClass = this.state.isToggleOn ? "toggle-on" : "toggle-off"
+        const stateClass = this.props.isToggleOn ? "toggle-on" : "toggle-off"
         return "toggle " + stateClass
     }
 
@@ -31,7 +30,6 @@ class Toggle extends React.Component {
             <button className={this.calClassName()} onClick={this.handleClick}>{this.state.text}</button>
         );
     }
-
 }
 
 export {
