@@ -17,7 +17,7 @@ class Toggle extends React.Component {
         this.setState({
             text: isToggleOn ? "√" : ""
         });
-        this.props.onToggleStateChange(isToggleOn)
+        this.props.onToggleStateChange(isToggleOn);
     }
 
     calClassName() {

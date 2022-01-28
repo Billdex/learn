@@ -1,23 +1,27 @@
 import React from 'react'
 import ReactDom from 'react-dom'
+import { nanoid } from 'nanoid'
 import { Toggle } from './toggle'
 
 class TodoApp extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            items: [],
-            text: '',
-        }
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+            todoItems: [],
+            doneItems: [],
+            text: ''
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleItemFinished = this.handleItemFinished.bind(this);
+        this.handleItemReTodo = this.handleItemReTodo.bind(this);
     }
 
     render() {
         return (
             <div>
                 <h2>Todo List</h2>
-                <TodoList items={this.state.items}/>
+                <TodoList todoItems={this.state.todoItems} doneItems={this.state.doneItems} onItemFinished={this.handleItemFinished} onItemReTodo={this.handleItemReTodo} />
                 <form onSubmit={this.handleSubmit}>
                     <textarea onChange={this.handleChange} value={this.state.text}/> <br/>
                     <button>Add Todo</button>
@@ -27,36 +31,70 @@ class TodoApp extends React.Component {
     }
 
     handleChange(e) {
-        this.setState({text: e.target.value})
+        this.setState({text: e.target.value});
     }
 
     handleSubmit(e) {
         // 清除默认刷新行为
-        e.preventDefault()
-        if (this.state.text.length <= 1) {
+        e.preventDefault();
+        if (this.state.text.length < 1) {
             return
         }
         const item = {
-            content: this.state.text
-        }
-        this.setState(
-            {
-                items: this.state.items.concat(item),
+            id: nanoid(),
+            content: this.state.text,
+            finished: false
+        };
+        this.setState({
+                todoItems: this.state.todoItems.concat(item),
                 text: ''
-            }
-        )
+            });
+    }
+
+    handleItemFinished(item) {
+        const todoItems = this.state.todoItems.filter((i) => i.id != item.id);
+        const doneItems = this.state.doneItems.concat(item);
+        this.setState({
+            todoItems: todoItems,
+            doneItems: doneItems
+        });
+    }
+
+    handleItemReTodo(item) {
+        const todoItems = this.state.todoItems.concat(item);
+        const doneItems = this.state.doneItems.filter((i) => i.id != item.id);
+        this.setState({
+            todoItems: todoItems,
+            doneItems: doneItems
+        });
     }
 }
 
 class TodoList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleItemStateChange = this.handleItemStateChange.bind(this)
+    }
+
+    handleItemStateChange(item) {
+        if (item.finished) {
+            this.props.onItemFinished(item);
+        } else {
+            this.props.onItemReTodo(item);
+        }
+    }
+
     render() {
         return (
             <ul>
-                {this.props.items.map(
-                    (item, index) => {
-                        return <TodoItem key={index} content={item.content}/>
-                    }
-                )}
+                {this.props.todoItems.map(
+                    (item) => {
+                        return <TodoItem key={item.id} item={item} onItemStateChange={this.handleItemStateChange}/>
+                    })}
+                {this.props.doneItems.map(
+                    (item) => {
+                        return <TodoItem key={item.id} item={item} onItemStateChange={this.handleItemStateChange}/>
+                    })}
             </ul>
         )
     }
@@ -65,31 +103,25 @@ class TodoList extends React.Component {
 class TodoItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            finished: false
-        }
-        this.handleItemStateChange = this.handleItemStateChange.bind(this)
         this.outputContent = this.outputContent.bind(this)
     }
 
-    handleItemStateChange(toggleOn) {
-        this.setState({
-            finished: toggleOn
-        });
-    }
-
     outputContent() {
-        const finished = this.state.finished 
-        if(finished) {
-            return (<span><s>{this.props.content}</s></span>);
+        if (this.props.finished) {
+            return (<span><s>{this.props.item.content}</s></span>);
         } else {
-            return (<span>{this.props.content}</span>);
+            return (<span>{this.props.item.content}</span>);
         }
     }
 
     render() {
         return (
-            <li><Toggle isToggleOn={this.state.finished} onToggleStateChange={this.handleItemStateChange} /> {this.outputContent()}</li>
+            <li><Toggle isToggleOn={this.props.item.finished} onToggleStateChange={
+                (toggleState) => {this.props.onItemStateChange({
+                    id: this.props.item.id,
+                    content: this.props.item.content,
+                    finished: toggleState})}
+                } /> {this.outputContent()}</li>
         )
     }
 }
