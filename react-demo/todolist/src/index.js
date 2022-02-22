@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import {nanoid} from 'nanoid'
-import {Toggle} from './toggle'
 
 import "./index.css"
 
@@ -82,6 +81,7 @@ class TodoList extends React.Component {
     }
 
     handleItemStateChange(item) {
+        item.finished = !item.finished
         if (item.finished) {
             this.props.onItemFinished(item);
         } else {
@@ -89,47 +89,26 @@ class TodoList extends React.Component {
         }
     }
 
+    itemRender(item) {
+        const content = item.finished ? <span><s>{item.content}</s></span> : <span>{item.content}</span>
+        return (
+            <div>
+                <button
+                    className={"toggle " + (item.finished ? "toggle-on" : "toggle-off")}
+                    onClick={() => this.handleItemStateChange(item)}>
+                    {item.finished ? "✓" : "  "}
+                </button>
+                {content}
+            </div>
+        )
+    }
+
     render() {
         return (
             <ul>
-                {this.props.todoItems.map(
-                    (item) => {
-                        return <TodoItem key={item.id} item={item} onItemStateChange={this.handleItemStateChange}/>
-                    })}
-                {this.props.doneItems.map(
-                    (item) => {
-                        return <TodoItem key={item.id} item={item} onItemStateChange={this.handleItemStateChange}/>
-                    })}
+                {this.props.todoItems.map(item => <li key={item.id}>{this.itemRender(item)}</li>)}
+                {this.props.doneItems.map(item => <li key={item.id}>{this.itemRender(item)}</li>)}
             </ul>
-        )
-    }
-}
-
-class TodoItem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.outputContent = this.outputContent.bind(this)
-    }
-
-    outputContent() {
-        if (this.props.item.finished) {
-            return (<span><s>{this.props.item.content}</s></span>);
-        } else {
-            return (<span>{this.props.item.content}</span>);
-        }
-    }
-
-    render() {
-        return (
-            <li><Toggle isToggleOn={this.props.item.finished} onToggleStateChange={
-                (toggleState) => {
-                    this.props.onItemStateChange({
-                        id: this.props.item.id,
-                        content: this.props.item.content,
-                        finished: toggleState
-                    })
-                }
-            }/> {this.outputContent()}</li>
         )
     }
 }
