@@ -3,9 +3,9 @@ import React from "react";
 export default function Card(props) {
     const pathPng = new URL("../images/path.png", import.meta.url).href
     return (
-        <div className="flex py-8 px-4">
-            <img className="rounded-xl object-cover w-48 h-64" src={props.imageUrl} alt="" />
-            <div className="flex flex-col content-center ml-6 text-left justify-center">
+        <div className="sm:flex py-8 px-4">
+            <img className="rounded-xl object-cover sm:w-48 sm:h-64" src={props.imageUrl} alt="" />
+            <div className="flex flex-col flex-1 content-center sm:ml-6 text-left justify-center">
                 <div className="flex">
                     <img className="h-3 my-auto" src={pathPng} alt=""/>
                     <span className="pl-2 uppercase tracking-widest">{props.location}</span>
