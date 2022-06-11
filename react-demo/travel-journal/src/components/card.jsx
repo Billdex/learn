@@ -3,7 +3,7 @@ import React from "react";
 export default function Card(props) {
     const pathPng = new URL("../images/path.png", import.meta.url).href
     return (
-        <div className="flex py-8">
+        <div className="flex py-8 px-4">
             <img className="rounded-xl object-cover w-48 h-64" src={props.imageUrl} alt="" />
             <div className="flex flex-col content-center ml-6 text-left justify-center">
                 <div className="flex">

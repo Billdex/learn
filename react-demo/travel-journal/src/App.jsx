@@ -6,22 +6,17 @@ import Nav from "./components/nav";
 import Card from "./components/card";
 
 function App() {
-    const [count, setCount] = useState(0)
-    const cards = Data.map((item, index) => {
-        const hr = index !== 0 ? <hr className="divide-red-100"/> : null
+    const cards = Data.map((item) => {
         return (
-            <div>
-                {hr}
-                <Card
-                    title={item.title}
-                    imageUrl={item.imageUrl}
-                    location={item.location}
-                    googleMapsUrl={item.googleMapsUrl}
-                    startDate={item.startDate}
-                    endDate={item.endDate}
-                    description={item.description}
-                />
-            </div>
+            <Card
+                title={item.title}
+                imageUrl={item.imageUrl}
+                location={item.location}
+                googleMapsUrl={item.googleMapsUrl}
+                startDate={item.startDate}
+                endDate={item.endDate}
+                description={item.description}
+            />
         )
     })
     console.log(Data)
@@ -29,7 +24,7 @@ function App() {
         <div className="App">
             <Nav/>
             <div>
-                <div className="w-4/5 mx-auto py-8">
+                <div className="w-4/5 mx-auto py-8 divide-y divide-gray-200">
                     {cards}
                 </div>
             </div>
