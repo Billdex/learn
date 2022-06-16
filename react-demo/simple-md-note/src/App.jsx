@@ -5,7 +5,7 @@ import Nav from "./components/Nav";
 import {nanoid} from "nanoid";
 
 function App() {
-    const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")) || [])
+    const [notes, setNotes] = useState(() => JSON.parse(localStorage.getItem("notes")) || [])
     const [currentNoteId, setCurrentNoteId] = useState(notes[0] && notes[0].id)
 
     useEffect(() => {
@@ -15,23 +15,26 @@ function App() {
     function addNote() {
         const newNote = {
             id: nanoid(10),
-            title: `my note ${notes.length+1}`,
             content: ""
         }
-        setNotes(prev => prev.concat(newNote))
+        setNotes(prev => [newNote, ...prev])
         setCurrentNoteId(newNote.id)
     }
 
     function editNote(event) {
         setNotes(prevNotes => {
-            return prevNotes.map(note => {
-                return currentNoteId === note.id ?
-                    {
-                        ...note,
+            const newArray = []
+            for (let i = 0; i < prevNotes.length; i++) {
+                if (currentNoteId === prevNotes[i].id) {
+                    newArray.unshift({
+                        ...prevNotes[i],
                         content: event.target.value
-                    } :
-                    note
-            })
+                    })
+                } else {
+                    newArray.push(prevNotes[i])
+                }
+            }
+            return newArray
         })
     }
 
@@ -48,7 +51,7 @@ function App() {
                         noteList={notes.map(note => {
                             return {
                                 id: note.id,
-                                title: note.title
+                                title: note.content === "" ? "untitled" : note.content.split("\n")[0]
                             }
                         })} addCallback={addNote} toggleCallback={setCurrentNoteId}/>
                     <Editor

@@ -4,18 +4,18 @@ import React from "react";
 export default function Nav(props) {
     const items = props.noteList.map(note => {
         return <div
-            className={"flex bg-blue-300 w-full h-12 justify-center items-center font-medium text-white"}
+            className={"flex px-3 h-12 bg-blue-300 justify-center items-center"}
             key={note.id}
             onClick={() => {
                 props.toggleCallback(note.id)
             }}>
-            {note.title}
+            <span className="text-white truncate">{note.title}</span>
         </div>
     })
 
 
     return (
-        <div className="w-44 h-screen bg-blue-100">
+        <div className="w-52 h-screen bg-blue-100">
             <div className="py-4">
                 <h1 className="text-3xl">Notes</h1>
                 <button
