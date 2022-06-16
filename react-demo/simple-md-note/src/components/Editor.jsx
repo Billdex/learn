@@ -1,9 +1,11 @@
 import React from "react";
 
-export default function Editor(props) {
+export default function Editor({note, changeCallback}) {
     return (
-        <div>
-            <textarea value={props.text} onChange={props.changeCallback}/>
+        <div className="w-full">
+            <textarea
+                className="w-full h-screen"
+                value={note.content} onChange={changeCallback}/>
         </div>
     )
 }

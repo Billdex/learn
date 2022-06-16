@@ -1,33 +1,31 @@
 import {useEffect, useState} from 'react'
-import logo from './logo.svg'
 import './App.css'
 import Editor from "./components/Editor";
 import Nav from "./components/Nav";
 import {nanoid} from "nanoid";
 
 function App() {
-    const [notes, setNotes] = useState(localStorage.getItem("notes"))
-    const [currentNote, setCurrentNote] = useState(notes[0])
-    const [currentNoteId, setCurrentNoteId] = useState("")
+    const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")) || [])
+    const [currentNoteId, setCurrentNoteId] = useState(notes[0] && notes[0].id)
 
     useEffect(() => {
-        setNotes(localStorage.getItem("notes"))
-        return () => localStorage.setItem("notes", notes)
-    }, [currentNoteId])
+        localStorage.setItem("notes", JSON.stringify(notes))
+    }, [notes])
 
     function addNote() {
-        setNotes(prev => prev.concat({
+        const newNote = {
             id: nanoid(10),
             title: `my note ${notes.length+1}`,
             content: ""
-        }))
+        }
+        setNotes(prev => prev.concat(newNote))
+        setCurrentNoteId(newNote.id)
     }
 
     function editNote(event) {
-        setCurrentNote(event.target.value)
         setNotes(prevNotes => {
             return prevNotes.map(note => {
-                return currentNote.id === note.id ?
+                return currentNoteId === note.id ?
                     {
                         ...note,
                         content: event.target.value
@@ -37,26 +35,37 @@ function App() {
         })
     }
 
-    function toggleNote(id) {
-        setCurrentNoteId(id)
-        setCurrentNote(() => {
-            for (let i = 0; i < notes.length; i++) {
-                if (notes[i].id === id) {
-                    return notes[i]
-                }
-            }
-        })
-    }
+    const currentNote = notes.find(note => {
+        return note.id === currentNoteId
+    }) || notes[0];
+
 
     return (
-        <div className="App">
-            <Nav noteList={notes.map(note => {
-                return {
-                    id: note.id,
-                    title: note.title
-                }
-            })} addCallback={addNote} toggleCallback={toggleNote}/>
-            <Editor text={currentNote} changeCallback={editNote}/>
+        <div>{
+            notes.length > 0 ?
+                <div className="App flex flex-row bg-red-50">
+                    <Nav
+                        noteList={notes.map(note => {
+                            return {
+                                id: note.id,
+                                title: note.title
+                            }
+                        })} addCallback={addNote} toggleCallback={setCurrentNoteId}/>
+                    <Editor
+                        note={currentNote} changeCallback={editNote}
+                    />
+                </div>
+                :
+                <div className="h-screen flex flex-col justify-center items-center">
+                    <h1 className="text-5xl">You have no notes</h1>
+                    <button
+                        className="mt-5 w-52 h-12 bg-orange-300 rounded-full"
+                        onClick={addNote}
+                    >
+                        Create one now
+                    </button>
+                </div>
+        }
         </div>
     )
 }
