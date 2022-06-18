@@ -3,19 +3,28 @@ import React from "react";
 
 export default function Nav(props) {
     const items = props.noteList.map(note => {
+        const className = note.id === props.currentNote.id ?
+            "group flex px-4 h-12 bg-sky-400 justify-between items-center" :
+            "group flex px-4 h-12 bg-blue-300 justify-between items-center"
+        const title = note.content === "" ? "untitled" : note.content.split("\n")[0];
         return <div
-            className={"flex px-3 h-12 bg-blue-300 justify-center items-center"}
+            className={className}
             key={note.id}
             onClick={() => {
                 props.toggleCallback(note.id)
             }}>
-            <span className="text-white truncate">{note.title}</span>
+            <span className="text-white truncate">{title}</span>
+            <span className="hidden group-hover:inline-block cursor-pointer w-6 bg-red-400 text-white font-bold rounded-md"
+                onClick={(event) => props.deleteCallback(event, note.id)}
+            >
+                X
+            </span>
         </div>
     })
 
 
     return (
-        <div className="w-52 h-screen bg-blue-100">
+        <div className="flex-shrink-0 w-52 h-screen bg-blue-100">
             <div className="py-4">
                 <h1 className="text-3xl">Notes</h1>
                 <button

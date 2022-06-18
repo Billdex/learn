@@ -38,6 +38,10 @@ function App() {
         })
     }
 
+    function deleteNote(event, id) {
+        setNotes(notes.filter(note => note.id !== id))
+    }
+
     const currentNote = notes.find(note => {
         return note.id === currentNoteId
     }) || notes[0];
@@ -48,12 +52,12 @@ function App() {
             notes.length > 0 ?
                 <div className="App flex flex-row bg-red-50">
                     <Nav
-                        noteList={notes.map(note => {
-                            return {
-                                id: note.id,
-                                title: note.content === "" ? "untitled" : note.content.split("\n")[0]
-                            }
-                        })} addCallback={addNote} toggleCallback={setCurrentNoteId}/>
+                        noteList={notes}
+                        currentNote={currentNote}
+                        addCallback={addNote}
+                        toggleCallback={setCurrentNoteId}
+                        deleteCallback={deleteNote}
+                    />
                     <Editor
                         note={currentNote} changeCallback={editNote}
                     />
