@@ -21,14 +21,14 @@ function App() {
         setCurrentNoteId(newNote.id)
     }
 
-    function editNote(event) {
+    function editNote(value) {
         setNotes(prevNotes => {
             const newArray = []
             for (let i = 0; i < prevNotes.length; i++) {
                 if (currentNoteId === prevNotes[i].id) {
                     newArray.unshift({
                         ...prevNotes[i],
-                        content: event.target.value
+                        content: value
                     })
                 } else {
                     newArray.push(prevNotes[i])
@@ -50,7 +50,7 @@ function App() {
     return (
         <div>{
             notes.length > 0 ?
-                <div className="App flex flex-row bg-red-50">
+                <div className="flex flex-row bg-red-50">
                     <Nav
                         noteList={notes}
                         currentNote={currentNote}

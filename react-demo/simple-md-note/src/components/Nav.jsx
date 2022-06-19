@@ -14,7 +14,7 @@ export default function Nav(props) {
                 props.toggleCallback(note.id)
             }}>
             <span className="text-white truncate">{title}</span>
-            <span className="hidden group-hover:inline-block cursor-pointer w-6 bg-red-400 text-white font-bold rounded-md"
+            <span className="flex-shrink-0 hidden group-hover:inline-block text-center cursor-pointer w-6 bg-red-400 text-white font-bold rounded-md"
                 onClick={(event) => props.deleteCallback(event, note.id)}
             >
                 X
@@ -25,7 +25,7 @@ export default function Nav(props) {
 
     return (
         <div className="flex-shrink-0 w-52 h-screen bg-blue-100">
-            <div className="py-4">
+            <div className="flex flex-col py-4 items-center">
                 <h1 className="text-3xl">Notes</h1>
                 <button
                     className="mt-2 w-16 h-6 bg-orange-300 rounded-full"
