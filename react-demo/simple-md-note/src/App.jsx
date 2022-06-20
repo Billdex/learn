@@ -21,11 +21,11 @@ function App() {
         setCurrentNoteId(newNote.id)
     }
 
-    function editNote(value) {
+    function editNote(noteId, value) {
         setNotes(prevNotes => {
             const newArray = []
             for (let i = 0; i < prevNotes.length; i++) {
-                if (currentNoteId === prevNotes[i].id) {
+                if (noteId === prevNotes[i].id) {
                     newArray.unshift({
                         ...prevNotes[i],
                         content: value
